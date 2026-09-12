@@ -4,7 +4,6 @@ import { createTicket } from "../services/api";
 
 const PRIORITIES = ["Low", "Medium", "High", "Urgent"];
 
-// Simple email regex for client-side validation
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function CreateTicketPage() {
@@ -18,17 +17,14 @@ export default function CreateTicketPage() {
     priority: "Medium",
   });
 
-  // Field-level validation errors
   const [errors, setErrors] = useState({});
 
-  // Submission state
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState(null);
 
   function handleChange(e) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    // Clear the error for this field as the user types
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: null }));
     }
@@ -60,7 +56,6 @@ export default function CreateTicketPage() {
     setSubmitting(true);
     try {
       const newTicket = await createTicket(form);
-      // Navigate directly to the new ticket's detail page
       navigate(`/tickets/${newTicket.ticket_id}`, { state: { created: true } });
     } catch (err) {
       setServerError(err.message || "Failed to create ticket. Please try again.");
@@ -71,7 +66,6 @@ export default function CreateTicketPage() {
 
   return (
     <main className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Back link */}
       <button
         onClick={() => navigate("/")}
         className="text-sm text-slate-500 hover:text-slate-700 flex items-center gap-1 mb-6"
@@ -88,14 +82,12 @@ export default function CreateTicketPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="px-6 py-6 space-y-5" noValidate>
-          {/* Server-level error */}
           {serverError && (
             <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
               {serverError}
             </div>
           )}
 
-          {/* Customer Name */}
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1.5" htmlFor="customer_name">
               Customer Name <span className="text-red-500">*</span>
@@ -116,7 +108,6 @@ export default function CreateTicketPage() {
             )}
           </div>
 
-          {/* Customer Email */}
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1.5" htmlFor="customer_email">
               Customer Email <span className="text-red-500">*</span>
@@ -137,7 +128,6 @@ export default function CreateTicketPage() {
             )}
           </div>
 
-          {/* Subject */}
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1.5" htmlFor="subject">
               Subject <span className="text-red-500">*</span>
@@ -158,7 +148,6 @@ export default function CreateTicketPage() {
             )}
           </div>
 
-          {/* Description */}
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1.5" htmlFor="description">
               Description <span className="text-red-500">*</span>
@@ -179,7 +168,6 @@ export default function CreateTicketPage() {
             )}
           </div>
 
-          {/* Priority */}
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1.5" htmlFor="priority">
               Priority
@@ -202,7 +190,6 @@ export default function CreateTicketPage() {
             </p>
           </div>
 
-          {/* Submit */}
           <div className="pt-2">
             <button
               type="submit"

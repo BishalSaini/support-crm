@@ -7,9 +7,7 @@ export default function Navbar() {
     <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo / Brand */}
           <Link to="/" className="flex items-center gap-2 text-slate-800 hover:text-blue-600">
-            {/* Simple headset icon using SVG */}
             <svg
               className="w-6 h-6 text-blue-600"
               fill="none"
@@ -26,7 +24,6 @@ export default function Navbar() {
             <span className="font-semibold text-lg">Support CRM</span>
           </Link>
 
-          {/* Nav links */}
           <nav className="flex items-center gap-6">
             <Link
               to="/"

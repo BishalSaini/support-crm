@@ -4,8 +4,6 @@ from typing import Optional, List
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
 
 
-# --- Enums for validated string fields ---
-
 class StatusEnum(str, Enum):
     open = "Open"
     in_progress = "In Progress"
@@ -19,8 +17,6 @@ class PriorityEnum(str, Enum):
     urgent = "Urgent"
 
 
-# --- Note schemas ---
-
 class NoteCreate(BaseModel):
     note_text: str = Field(..., min_length=1, max_length=2000)
 
@@ -33,8 +29,6 @@ class NoteResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-
-# --- Ticket schemas ---
 
 class TicketCreate(BaseModel):
     customer_name: str = Field(..., min_length=1, max_length=200)

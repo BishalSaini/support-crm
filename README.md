@@ -62,26 +62,6 @@ The application is built with a clean three-layer architecture: a React frontend
         SQLite database file
 ```
 
-### Why this architecture?
-
-**Why separate frontend and backend?**  
-The frontend and backend are independent services. This means they can be deployed, scaled, and updated independently. It also means the frontend cannot directly touch the database — all data access goes through validated API endpoints.
-
-**Why does the frontend never access the database directly?**  
-Direct database access from the browser would expose credentials and bypass all validation and business logic. FastAPI acts as a controlled gateway — it validates every request, enforces business rules (e.g. only allowed status values), and controls what data is returned.
-
-**Why is search handled by the backend?**  
-If the frontend fetched all tickets and filtered in JavaScript, that would become very slow as the ticket count grows to thousands. Backend search with SQL ILIKE queries is far more efficient and scalable.
-
-**Why SQLite?**  
-SQLite keeps the assignment self-contained and requires no external database service. SQLAlchemy provides the relational models, constraints, and query support used by the application.
-
-**Why SQLAlchemy?**  
-SQLAlchemy is the standard Python ORM. It lets us define models in Python and write readable queries, without writing raw SQL for every operation.
-
-**Why REST?**  
-REST is simple, well-understood, and perfectly suited to this application's read/write operations. GraphQL would add unnecessary complexity for this use case.
-
 ---
 
 ## Database Schema

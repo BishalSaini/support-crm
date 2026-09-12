@@ -19,19 +19,16 @@ export default function TicketDetailPage() {
   const [error, setError] = useState(null);
   const [now, setNow] = useState(() => new Date());
 
-  // Editing controls
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedPriority, setSelectedPriority] = useState("");
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState(null);
 
-  // Note form
   const [noteText, setNoteText] = useState("");
   const [addingNote, setAddingNote] = useState(false);
   const [noteError, setNoteError] = useState(null);
 
-  // Show a "ticket created" banner if we navigated here after creation
   const justCreated = location.state?.created;
 
   useEffect(() => {
@@ -74,7 +71,6 @@ export default function TicketDetailPage() {
       });
       setTicket((prev) => ({ ...prev, ...updated }));
       setSaveSuccess(true);
-      // Hide success message after 3 seconds
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (err) {
       setSaveError(err.message || "Failed to save changes.");
@@ -92,7 +88,6 @@ export default function TicketDetailPage() {
 
     try {
       const newNote = await addNote(ticketId, noteText.trim());
-      // Append the new note locally — no need to refetch the whole ticket
       setTicket((prev) => ({ ...prev, notes: [...(prev.notes || []), newNote] }));
       setNoteText("");
     } catch (err) {
@@ -121,7 +116,6 @@ export default function TicketDetailPage() {
 
   return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Back link */}
       <button
         onClick={() => navigate("/")}
         className="text-sm text-slate-500 hover:text-slate-700 flex items-center gap-1 mb-6"
@@ -129,7 +123,6 @@ export default function TicketDetailPage() {
         ← Back to tickets
       </button>
 
-      {/* Created success banner */}
       {justCreated && (
         <div className="bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 text-sm mb-6">
           ✓ Ticket <strong>{ticket.ticket_id}</strong> created successfully!
@@ -137,9 +130,7 @@ export default function TicketDetailPage() {
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main ticket details — takes 2/3 width on large screens */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Ticket header card */}
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm">
             <div className="px-6 py-5 border-b border-slate-200">
               <div className="flex items-start justify-between gap-4">
@@ -154,7 +145,6 @@ export default function TicketDetailPage() {
               </div>
             </div>
             <div className="px-6 py-5 space-y-4">
-              {/* Customer info */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">Customer</p>
@@ -183,7 +173,6 @@ export default function TicketDetailPage() {
                 </div>
               </div>
 
-              {/* Description */}
               <div>
                 <p className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">Description</p>
                 <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{ticket.description}</p>
@@ -191,7 +180,6 @@ export default function TicketDetailPage() {
             </div>
           </div>
 
-          {/* Internal Notes */}
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm">
             <div className="px-6 py-5 border-b border-slate-200">
               <h2 className="text-base font-semibold text-slate-800">
@@ -203,7 +191,6 @@ export default function TicketDetailPage() {
             </div>
 
             <div className="px-6 py-5 space-y-4">
-              {/* Notes list */}
               {ticket.notes && ticket.notes.length > 0 ? (
                 <div className="space-y-3">
                   {ticket.notes.map((note) => (
@@ -217,7 +204,6 @@ export default function TicketDetailPage() {
                 <p className="text-sm text-slate-400 italic">No notes yet.</p>
               )}
 
-              {/* Add note form */}
               <form onSubmit={handleAddNote} className="pt-2">
                 <label className="block text-sm font-medium text-slate-700 mb-2">
                   Add internal note
@@ -244,14 +230,12 @@ export default function TicketDetailPage() {
           </div>
         </div>
 
-        {/* Sidebar — update controls */}
         <div className="space-y-4">
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm">
             <div className="px-5 py-4 border-b border-slate-200">
               <h2 className="text-base font-semibold text-slate-800">Update Ticket</h2>
             </div>
             <div className="px-5 py-5 space-y-4">
-              {/* Status selector */}
               <div>
                 <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
                   Status
@@ -267,7 +251,6 @@ export default function TicketDetailPage() {
                 </select>
               </div>
 
-              {/* Priority selector */}
               <div>
                 <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
                   Priority
@@ -283,7 +266,6 @@ export default function TicketDetailPage() {
                 </select>
               </div>
 
-              {/* Success / error feedback */}
               {saveSuccess && (
                 <p className="text-xs text-green-600 font-medium">✓ Changes saved successfully.</p>
               )}
@@ -291,7 +273,6 @@ export default function TicketDetailPage() {
                 <p className="text-xs text-red-600">{saveError}</p>
               )}
 
-              {/* Save button */}
               <button
                 onClick={handleSaveChanges}
                 disabled={saving}
@@ -302,7 +283,6 @@ export default function TicketDetailPage() {
             </div>
           </div>
 
-          {/* Quick info card */}
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm px-5 py-4 space-y-3">
             <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Quick Info</h3>
             <div className="flex items-center justify-between">

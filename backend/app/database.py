@@ -1,22 +1,16 @@
 from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# SQLite is the only supported database for this application.
 DATABASE_URL = "sqlite:///./support_crm.db"
 
-# Add connect_args for SQLite compatibility during local development/testing
 connect_args = {}
 if DATABASE_URL.startswith("sqlite"):
     connect_args = {"check_same_thread": False}
 
-# Create the SQLAlchemy engine
-# pool_pre_ping=True automatically checks connections before use
 engine = create_engine(DATABASE_URL, pool_pre_ping=True, connect_args=connect_args)
 
-# Each database operation will use a session from this factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Base class for all ORM models
 Base = declarative_base()
 
 

@@ -25,12 +25,9 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# --- CORS Configuration ---
-# Allows requests from local dev servers (localhost & 127.0.0.1) as well as configured FRONTEND_URL
 raw_frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
 origins = [url.strip() for url in raw_frontend_url.split(",") if url.strip()]
 
-# Add common local development origins if not already present
 for default_origin in ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000"]:
     if default_origin not in origins:
         origins.append(default_origin)
@@ -57,7 +54,6 @@ async def global_exception_handler(request: Request, exc: Exception):
         content={"detail": f"Database or Server Error: {str(exc)}"},
     )
 
-# Register the tickets router
 app.include_router(tickets.router)
 
 

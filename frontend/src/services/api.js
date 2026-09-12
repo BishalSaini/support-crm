@@ -1,11 +1,5 @@
-// Central API service
-// All calls to the backend go through here.
-// Base URL is read from the VITE_API_URL environment variable,
-// which defaults to localhost for development.
-
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-// Helper: perform a fetch and throw a clean error if the response is not OK
 async function request(method, path, body = null) {
   const options = {
     method,
@@ -19,24 +13,18 @@ async function request(method, path, body = null) {
   const response = await fetch(`${BASE_URL}${path}`, options);
 
   if (!response.ok) {
-    // Try to parse the backend's error detail, fall back to status text
     let errorMessage = `Request failed: ${response.status}`;
     try {
       const errorData = await response.json();
       errorMessage = errorData.detail || errorMessage;
-    } catch {
-      // ignore JSON parse failure
-    }
+    } catch {}
     throw new Error(errorMessage);
   }
 
-  // 204 No Content — nothing to parse
   if (response.status === 204) return null;
 
   return response.json();
 }
-
-// --- Ticket API calls ---
 
 export function getTickets({ status, search } = {}) {
   const params = new URLSearchParams();

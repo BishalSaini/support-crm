@@ -25,7 +25,6 @@ def get_tickets(
     Return all tickets. Supports optional filtering by status and/or a search term.
     Search is handled on the backend to keep things efficient as ticket volume grows.
     """
-    # Validate status if provided — must be one of the allowed values
     allowed_statuses = ["Open", "In Progress", "Closed"]
     if status and status not in allowed_statuses:
         raise HTTPException(

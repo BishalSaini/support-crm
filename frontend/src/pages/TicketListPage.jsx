@@ -6,7 +6,6 @@ import StatusBadge from "../components/StatusBadge";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { formatDate, getSlaStatus } from "../services/dateUtils";
 
-// Status filter options
 const STATUS_OPTIONS = ["All", "Open", "In Progress", "Closed"];
 const SLA_OPTIONS = ["All", "Overdue"];
 
@@ -17,16 +16,13 @@ export default function TicketListPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Controlled inputs
   const [searchInput, setSearchInput] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [slaFilter, setSlaFilter] = useState("All");
   const [now, setNow] = useState(() => new Date());
 
-  // The "committed" search value — updated after debounce
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  // Debounce: wait 400ms after the user stops typing before firing the API call
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchInput);
@@ -39,7 +35,6 @@ export default function TicketListPage() {
     return () => clearInterval(timer);
   }, []);
 
-  // Fetch tickets whenever filter or debounced search changes
   const fetchTickets = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -67,7 +62,6 @@ export default function TicketListPage() {
 
   return (
     <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Page header */}
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-semibold text-slate-800">Support Tickets</h1>
@@ -83,7 +77,6 @@ export default function TicketListPage() {
         </button>
       </div>
 
-      {/* Search and filter bar */}
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
         <input
           type="text"
@@ -116,7 +109,6 @@ export default function TicketListPage() {
         </select>
       </div>
 
-      {/* Content area */}
       {loading && <LoadingSpinner message="Loading tickets..." />}
 
       {!loading && error && (

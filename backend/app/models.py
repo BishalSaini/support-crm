@@ -13,7 +13,7 @@ class Ticket(Base):
     __tablename__ = "tickets"
 
     id = Column(Integer, primary_key=True, index=True)
-    ticket_id = Column(String, unique=True, nullable=False)  # e.g. TKT-001
+    ticket_id = Column(String, unique=True, nullable=False)
     customer_name = Column(String, nullable=False)
     customer_email = Column(String, nullable=False)
     subject = Column(String, nullable=False)
@@ -24,10 +24,8 @@ class Ticket(Base):
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
     sla_due_at = Column(DateTime(timezone=True), nullable=True)
 
-    # One ticket can have many notes
     notes = relationship("Note", back_populates="ticket", cascade="all, delete-orphan", order_by="Note.created_at")
 
-    # Indexes on fields we search/filter often
     __table_args__ = (
         Index("ix_tickets_ticket_id", "ticket_id"),
         Index("ix_tickets_status", "status"),
