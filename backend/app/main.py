@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
-from app.database import engine, Base, ensure_sqlite_schema, seed_demo_data
+from app.database import engine, Base, ensure_sqlite_schema
 from app.routes import tickets
 
 from contextlib import asynccontextmanager
@@ -14,7 +14,6 @@ async def lifespan(app: FastAPI):
     try:
         Base.metadata.create_all(bind=engine)
         ensure_sqlite_schema()
-        seed_demo_data()
     except Exception as e:
         print(f"Warning: Could not connect to database on startup: {e}")
     yield
