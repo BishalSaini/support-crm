@@ -21,9 +21,6 @@ def seed_demo_data():
 
     db = SessionLocal()
     try:
-        if db.query(models.Ticket).count() > 0:
-            return
-
         now = datetime.now(timezone.utc)
         tickets = [
             models.Ticket(
@@ -78,7 +75,15 @@ def seed_demo_data():
                 sla_due_at=now + timedelta(hours=40),
             ),
         ]
-        db.add_all(tickets)
+        existing_ids = {
+            ticket_id
+            for (ticket_id,) in db.query(models.Ticket.ticket_id).all()
+        }
+        missing_tickets = [ticket for ticket in tickets if ticket.ticket_id not in existing_ids]
+        if not missing_tickets:
+            return
+
+        db.add_all(missing_tickets)
         db.commit()
     finally:
         db.close()
