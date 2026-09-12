@@ -1,0 +1,7 @@
+--only-binary :all:
+fastapi
+uvicorn[standard]
+sqlalchemy
+pydantic[email]
+python-dotenv
+
