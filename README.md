@@ -8,8 +8,6 @@ A full-stack Customer Support Ticket Management System built as a hiring assignm
 
 Support CRM is an internal tool designed for support staff to manage customer support tickets. Staff can create tickets, track their status and priority, add internal notes, and search/filter across all tickets.
 
-The application is built with a clean three-layer architecture: a React frontend, a FastAPI REST backend, and a local SQLite database.
-
 ---
 
 ## Features
@@ -39,28 +37,6 @@ The application is built with a clean three-layer architecture: a React frontend
 | ORM | SQLAlchemy |
 | Database | SQLite |
 | Dev Server | Uvicorn |
-
----
-
-## Architecture
-
-```
-         USER BROWSER
-              │
-              ▼
-   React + Vite (Vercel)
-   Tailwind CSS
-              │
-        HTTP / JSON
-              │
-              ▼
-   FastAPI REST API (Railway)
-              │
-         SQLAlchemy ORM
-              │
-              ▼
-        SQLite database file
-```
 
 ---
 
@@ -281,23 +257,6 @@ The frontend will be available at `http://localhost:5173`.
 After deploying both services:
 - Update `FRONTEND_URL` in Railway to your Vercel URL (e.g. `https://support-crm.vercel.app`)
 - This ensures CORS only allows requests from your actual frontend, not arbitrary origins
-
----
-
-## Architecture Decisions
-
-| Decision | Reason |
-|---|---|
-| React | Industry-standard UI library; component model keeps code modular and readable |
-| Vite | Fast dev server and build tool for React projects |
-| Tailwind CSS | Utility-first CSS; keeps styles co-located with components without writing separate CSS files |
-| FastAPI | Modern Python framework with automatic validation (Pydantic), auto-generated docs, and excellent performance |
-| SQLite | Zero-configuration local database; keeps the assignment self-contained |
-| SQLAlchemy | Standard Python ORM; readable query syntax, avoids raw SQL for simple operations |
-| REST | Simple, stateless, well-understood API style — right fit for CRUD-heavy operations |
-| Separate frontend/backend | Independent deployment, clear separation of concerns, protects database from direct browser access |
-| Two tables only | Assignment explicitly favors simplicity; tickets and notes cover all requirements |
-| Priority as bonus feature | Directly useful for support staff; easy to understand and implement well |
 
 ---
 
