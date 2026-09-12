@@ -8,19 +8,6 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2 text-slate-800 hover:text-blue-600">
-            <svg
-              className="w-6 h-6 text-blue-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M18.364 5.636A9 9 0 1 1 5.636 18.364M12 8v4l3 3"
-              />
-            </svg>
             <span className="font-semibold text-lg">Support CRM</span>
           </Link>
 
